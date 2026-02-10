@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{{ W.couple }} — Invitación</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+<div class="grain"></div>
+
+<div class="wrap">
+  <section class="hero panel" id="inicio" data-panel="inicio">
+    <div class="heroGrid">
+      <div class="heroMedia" aria-hidden="true">
+        <img src="{{ url_for('static', filename='img/hero.jpg') }}" alt="" />
+      </div>
+
+      <div class="heroContent">
+        {% if invite and invite['label'] %}
+          <div class="hello">Hola, <strong>{{ invite['label'] }}</strong> 🤍</div>
+        {% endif %}
+        <div class="heroEyebrow">Madrid · {{ W.date }}</div>
+        <h1>{{ W.couple }}</h1>
+        <div class="heroFull">{{ W.couple_full }}</div>
+        <p class="sub">No creemos en lo perfecto. Creemos en <strong>elegirnos</strong> cada día. Y nos haría ilusión celebrarlo contigo — con calma, con música y con la gente que importa.</p>
+
+        <div class="heroMeta">
+          <div class="pill"><span class="k">Llegada</span> · <span class="v">19:45</span></div>
+          <div class="pill"><span class="k">Lugar</span> · <span class="v">{{ W.venue }}</span></div>
+          <div class="pill"><span class="k">Confirmación</span> · <span class="v">por QR</span></div>
+        </div>
+
+        <div class="heroActions">
+          <a class="btn" href="#rsvp" data-target="rsvp">Confirmar asistencia</a>
+          <a class="btn btnGhost" href="#detalles" data-target="detalles">Ver detalles</a>
+          <a class="btn btnGhost" href="{{ url_for('main.calendar_ics') }}">Añadir al calendario</a>
+        </div>
+
+        <div class="countdown" aria-label="Cuenta atrás">
+          <div class="cdTitle">Cuenta atrás</div>
+          <div class="cdGrid">
+            <div class="cdBox"><div class="cdNum" id="cdDays">—</div><div class="cdLbl">días</div></div>
+            <div class="cdBox"><div class="cdNum" id="cdHours">—</div><div class="cdLbl">horas</div></div>
+            <div class="cdBox"><div class="cdNum" id="cdMins">—</div><div class="cdLbl">min</div></div>
+          </div>
+          <div class="cdFine">12·09·2026 — 19:45 (Madrid)</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <nav class="nav" aria-label="Navegación">
+    <a href="#inicio" data-target="inicio" class="is-active">Inicio</a>
+    <a href="#fotos" data-target="fotos">Fotos</a>
+    <a href="#horario" data-target="horario">Horario</a>
+    <a href="#detalles" data-target="detalles">Ubicación</a>
+    <a href="#vestimenta" data-target="vestimenta">Vestimenta</a>
+    <a href="#transporte" data-target="transporte">Transporte</a>
+    <a href="#regalo" data-target="regalo">Regalo</a>
+    <a href="#rsvp" data-target="rsvp" class="navCta">RSVP</a>
+  </nav>
+
+  <section class="section panel" id="fotos" data-panel="fotos" style="display:none">
+    <div class="card reveal">
+      <div class="sectionTop">
+        <h2>Nosotros</h2>
+        <p class="fine">Una historia sencilla, pero de las que se quedan.</p>
+      </div>
+
+      <div class="story">
+        <p>
+          Empezamos sin saber a dónde íbamos. Y, sin darnos cuenta, nos fuimos construyendo un lugar propio:
+          <strong>casa es donde estamos juntos</strong>. Ahora toca celebrar ese “sí” con quienes han estado, están y estarán.
+        </p>
+      </div>
+
+      <div class="sectionTop" style="margin-top:14px">
+        <h3 class="miniH">Momentos</h3>
+        <p class="fine">Un vistazo rápido antes del gran día.</p>
+      </div>
+
+      <div class="gal" style="margin-top:14px">
+        <figure class="gfig">
+          <div class="gframe landscape"><img class="js-lightbox" src="{{ url_for('static', filename='img/gallery/gallery_1.jpg') }}" alt="Cristhian y Diana" loading="lazy" data-caption="El plan siempre fue el mismo: ir juntos." /></div>
+          <figcaption>El plan siempre fue el mismo: ir juntos.</figcaption>
+        </figure>
+        <figure class="gfig">
+          <div class="gframe"><img class="js-lightbox" src="{{ url_for('static', filename='img/gallery/gallery_2.jpg') }}" alt="Cristhian y Diana" loading="lazy" data-caption="Un ‘sí’ que se nota en la mirada." /></div>
+          <figcaption>Un ‘sí’ que se nota en la mirada.</figcaption>
+        </figure>
+        <figure class="gfig">
+          <div class="gframe"><img class="js-lightbox" src="{{ url_for('static', filename='img/gallery/gallery_3.jpg') }}" alt="Cristhian y Diana" loading="lazy" data-caption="Cuando el abrazo dice más que las palabras." /></div>
+          <figcaption>Cuando el abrazo dice más que las palabras.</figcaption>
+        </figure>
+        <figure class="gfig">
+          <div class="gframe landscape"><img class="js-lightbox" src="{{ url_for('static', filename='img/gallery/gallery_4.jpg') }}" alt="Cristhian y Diana" loading="lazy" data-caption="Risas de esas que te arreglan el día." /></div>
+          <figcaption>Risas de esas que te arreglan el día.</figcaption>
+        </figure>
+        <figure class="gfig">
+          <div class="gframe"><img class="js-lightbox" src="{{ url_for('static', filename='img/gallery/gallery_5.jpg') }}" alt="Cristhian y Diana" loading="lazy" data-caption="Un beso con nieve incluida (y cero prisa)." /></div>
+          <figcaption>Un beso con nieve incluida (y cero prisa).</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="section panel" id="horario" data-panel="horario" style="display:none">
+    <div class="card reveal">
+      <h2>Horario</h2>
+      <div class="tl">
+        <div class="tlItem"><div class="tlTime">19:45</div><div class="tlBody"><div class="tlTitle">Llegada de invitados</div><div class="tlDesc">Reencuentros, abrazos y el primer “¿cómo estás?” de verdad.</div></div></div>
+        <div class="tlItem"><div class="tlTime">20:10</div><div class="tlBody"><div class="tlTitle">Ceremonia</div><div class="tlDesc">Promesas sencillas, palabras honestas y el momento que lo cambia todo.</div></div></div>
+        <div class="tlItem"><div class="tlTime">20:40</div><div class="tlBody"><div class="tlTitle">Cóctel</div><div class="tlDesc">Brindis, conversaciones que se alargan y fotos sin prisas.</div></div></div>
+        <div class="tlItem"><div class="tlTime">22:00</div><div class="tlBody"><div class="tlTitle">Cena</div><div class="tlDesc">Mesa llena, brindis con historia y sobremesa de las buenas.</div></div></div>
+        <div class="tlItem"><div class="tlTime">00:00</div><div class="tlBody"><div class="tlTitle">Empieza la fiesta</div><div class="tlDesc">Se sueltan las corbatas, sube la música y ya no se mira el reloj.</div></div></div>
+        <div class="tlItem"><div class="tlTime">02:30</div><div class="tlBody"><div class="tlTitle">Recena</div><div class="tlDesc">Refuerzo táctico para los valientes. Y seguimos.</div></div></div>
+        <div class="tlItem"><div class="tlTime">05:00</div><div class="tlBody"><div class="tlTitle">Fin</div><div class="tlDesc">Cuando ya duelen los pies… pero no el recuerdo. Vuelta con cabeza.</div></div></div>
+      </div>
+      <div class="fine">* Los horarios son la brújula; la regla real es pasarlo bien.</div>
+      <div class="actions" style="margin-top:10px">
+        <a class="btn btnGhost" href="{{ url_for('main.calendar_ics') }}">Añadir al calendario</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section panel" id="detalles" data-panel="detalles" style="display:none">
+    <div class="card reveal">
+        <h2>Ubicación</h2>
+        <p class="fine"><span class="k">{{ W.venue }}</span><br/><span class="v">{{ W.address }}</span></p>
+        <a class="mapCard" href="{{ W.maps_url }}" target="_blank" rel="noopener" aria-label="Abrir ubicación en Maps">
+          <div class="mapEmbed" aria-hidden="true">
+            <iframe
+              title="Mapa"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              src="https://www.openstreetmap.org/export/embed.html?bbox=-3.7913086%2C40.5141183%2C-3.7713086%2C40.5261183&layer=mapnik&marker=40.5201183%2C-3.7813086"></iframe>
+          </div>
+          <span class="mapOverlay">Abrir en Maps</span>
+        </a>
+        <div class="fine"><span class="k">Contacto:</span> <span class="v">{{ W.contact_phone }}</span></div>
+        <div class="fine" style="margin-top:8px">Recomendación: si vienes en coche, guarda la ubicación. Si vienes a celebrar fuerte, pronto confirmaremos la opción de vuelta segura.</div>
+    </div>
+  </section>
+
+  <section class="section panel" id="vestimenta" data-panel="vestimenta" style="display:none">
+    <div class="card reveal">
+      <h2>Vestimenta</h2>
+      <p class="fine">Nos hace ilusión veros <strong>bien vestidos y con presencia</strong>. El tono es <em>cocktail</em>: elegante, cómodo y con intención. No hace falta chaqué, pero <strong>sí</strong> que se note que es un día especial.</p>
+      <div class="row" style="margin-top:10px">
+        <div class="pill"><span class="k">Ideal</span> · <span class="v">traje / vestido / conjunto arreglado</span></div>
+        <div class="pill"><span class="k">También encaja</span> · <span class="v">vaquero oscuro + camisa/blusa + zapato limpio</span></div>
+        <div class="pill"><span class="k">Evitar</span> · <span class="v">chándal, ropa muy sport, zapatillas de gimnasio</span></div>
+      </div>
+      <div class="fine">Si tienes duda, nos mandas una foto y te damos el “ok” en 10 segundos: <strong>{{ W.contact_phone }}</strong>.</div>
+    </div>
+  </section>
+
+  <section class="section panel" id="transporte" data-panel="transporte" style="display:none">
+    <div class="card reveal">
+      <h2>Transporte</h2>
+      <p class="fine">Estamos valorando poner <strong>autobús de vuelta</strong> para que quien beba vuelva tranquilo. En cuanto lo cerremos, lo verás aquí.</p>
+      <details>
+        <summary>¿Habrá parking?</summary>
+        <div class="faqBody">Sí, el restaurante dispone de zona de aparcamiento.</div>
+      </details>
+    </div>
+  </section>
+
+  <section class="section panel" id="rsvp" data-panel="rsvp" style="display:none">
+    <div class="grid">
+      <div class="card reveal">
+        <h2>Confirmación</h2>
+
+        {% if done %}
+<div style="background:#f5f1ea;padding:25px;border-radius:12px;text-align:center;margin-bottom:20px;">
+<h2>¡Gracias, {{ invite.label }}! 🎉</h2>
+<p>Hemos recibido vuestra confirmación.</p>
+<p><strong>Nos vemos el 12 de septiembre de 2026 a las 19:30 en El Pardo.</strong></p>
+<p style="margin-top:10px;">— Cristhian & Diana 💛</p>
+</div>
+
+          <div class="ok"><strong>¡Gracias!</strong> Hemos registrado tu respuesta.</div>
+        {% endif %}
+
+        {% if error %}
+          <div class="err">{{ error }}</div>
+        {% endif %}
+
+        {% if not invite %}
+          <div class="err">
+            Para confirmar asistencia necesitas entrar desde el <strong>QR de tu invitación</strong>.
+            <br/>Si tienes cualquier problema, escríbenos o llámanos: <strong>{{ W.contact_phone }}</strong>
+          </div>
+        {% else %}
+          <div class="invitehint">
+            Invitación: <strong>{{ invite['label'] or invite['code'] }}</strong> · Máximo asistentes: <strong>{{ invite['max_guests'] }}</strong>
+          </div>
+
+          <form method="post" action="{{ url_for('main.rsvp') }}">
+            <input type="hidden" name="code" value="{{ invite['code'] }}" />
+
+            <div>
+              <label>Nombre y apellidos *</label>
+              <input name="name" required maxlength="120" placeholder="Ej.: Ana Martínez López" />
+            </div>
+
+            <div class="two">
+              <div>
+                <label>¿Asistirás? *</label>
+                <select name="attending" required>
+                  <option value="" selected disabled>Selecciona</option>
+                  <option value="yes">Sí</option>
+                  <option value="no">No</option>
+                </select>
+              </div>
+              <div>
+                <label>Nº de asistentes (incluyéndote) *</label>
+                <select name="guests_count" required>
+                  {% for n in range(1, invite['max_guests'] + 1) %}
+                    <option value="{{ n }}">{{ n }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label>Alergias / intolerancias (opcional)</label>
+              <textarea name="allergies" maxlength="400" placeholder="Ej.: sin gluten, frutos secos..."></textarea>
+            </div>
+
+            <div>
+              <label>Comentarios (opcional)</label>
+              <textarea name="note" maxlength="500" placeholder="Cualquier detalle que debamos saber"></textarea>
+            </div>
+
+            <button type="submit">Enviar confirmación</button>
+            <div class="fine">Tus datos se usan únicamente para la organización de la boda.</div>
+          </form>
+        {% endif %}
+      </div>
+
+    </div>
+  </section>
+
+  <section class="section panel" id="regalo" data-panel="regalo" style="display:none">
+    <div class="card reveal">
+      <h2>Regalo</h2>
+      <p class="fine"><strong>Lo más importante es que vengas.</strong> De verdad. Tu presencia, tu tiempo y tus ganas de celebrarlo con nosotros son el regalo que más nos ilusiona.</p>
+
+      <div class="giftBox" style="margin-top:12px">
+        <div class="giftTitle">Si aun así quieres tener un detalle…</div>
+        <div class="giftBody">
+          Preferimos evitar regalos materiales. Si te nace, nos hará ilusión una pequeña aportación para nuestra <strong>nueva etapa</strong>
+          (viaje, hogar y todo lo que viene). Lo recibiremos con la misma gratitud con la que recibimos tu tiempo.<br/>
+          <span class="giftNote">De corazón: no lo pedimos. Si vienes, ya está. Esto es solo una opción para quien lo sienta y quiera hacerlo con discreción.</span>
+        </div>
+        <div class="giftSteps">
+          <div class="pill"><span class="k">Opción 1</span> · <span class="v">Bizum / Transferencia</span></div>
+          <div class="pill"><span class="k">Opción 2</span> · <span class="v">Sobre el día de la boda</span></div>
+        </div>
+      </div>
+
+      <div class="fine" style="margin-top:10px">
+        Si prefieres Bizum o transferencia, nos lo puedes pedir con total confianza: <strong>Cristhian — +34 645 726 557</strong>.
+        Y si no, de verdad: con tu abrazo, tu presencia y tus ganas… vamos servidos.
+      </div>
+
+      <div class="seal" aria-hidden="true" style="margin-top:14px">
+        <div class="sealInner">
+          <div class="sealBig">C ✕ D</div>
+          <div class="sealSmall">12 · 09 · 26</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer">Cristhian & Diana — 12·09·2026</div>
+</div>
+
+<!-- Lightbox (galería premium) -->
+<div class="lb" id="lightbox" aria-hidden="true">
+  <div class="lbBackdrop" data-lb-close></div>
+  <div class="lbDialog" role="dialog" aria-modal="true" aria-label="Foto">
+    <button class="lbClose" type="button" aria-label="Cerrar" data-lb-close>×</button>
+    <img class="lbImg" alt="" />
+    <div class="lbCap"></div>
+    <div class="lbHint">Esc para cerrar</div>
+  </div>
+</div>
+
+<script>
+  // Navegación por secciones (modo "solo una sección")
+  (function(){
+    const panels = Array.from(document.querySelectorAll('.panel'));
+    const links = Array.from(document.querySelectorAll('.nav a[data-target]'));
+    const triggers = Array.from(document.querySelectorAll('[data-target]'));
+
+    function showPanel(id){
+      panels.forEach(p => {
+        const on = (p.getAttribute('data-panel') === id);
+        p.style.display = on ? '' : 'none';
+      });
+      links.forEach(a => a.classList.toggle('is-active', a.dataset.target === id));
+      window.scrollTo({top: 0, behavior: 'smooth'});
+
+      // Forzamos el reveal para que, al cambiar de sección, se vea limpio.
+      const active = panels.find(p => p.getAttribute('data-panel') === id);
+      if (active){
+        active.querySelectorAll('.reveal').forEach(el => el.classList.add('is-visible'));
+      }
+    }
+
+    triggers.forEach(a => {
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = a.dataset.target;
+        if (!target) return;
+        showPanel(target);
+        history.replaceState(null, '', '#' + target);
+      });
+    });
+
+    // Si vienen con hash (ej. desde el QR), enseñamos esa sección.
+    const hash = (location.hash || '').replace('#','');
+    if (hash && panels.some(p => p.getAttribute('data-panel') === hash)){
+      showPanel(hash);
+    } else {
+      showPanel('inicio');
+    }
+  })();
+
+  // Reveal on scroll
+  (function(){
+    const items = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach((en)=>{
+        if (en.isIntersecting) en.target.classList.add('is-visible');
+      });
+    }, {threshold: 0.14});
+    items.forEach(i=>io.observe(i));
+  })();
+
+  // Cuenta atras (hora Madrid).
+  (function(){
+    const target = new Date('2026-09-12T19:45:00+02:00').getTime();
+    const $d = document.getElementById('cdDays');
+    const $h = document.getElementById('cdHours');
+    const $m = document.getElementById('cdMins');
+    function tick(){
+      const now = Date.now();
+      let diff = Math.max(0, target - now);
+      const days = Math.floor(diff / (1000*60*60*24));
+      diff -= days * (1000*60*60*24);
+      const hours = Math.floor(diff / (1000*60*60));
+      diff -= hours * (1000*60*60);
+      const mins = Math.floor(diff / (1000*60));
+      $d.textContent = String(days);
+      $h.textContent = String(hours).padStart(2,'0');
+      $m.textContent = String(mins).padStart(2,'0');
+    }
+    tick();
+    setInterval(tick, 30000);
+  })();
+
+  // Lightbox (clic en foto -> abre grande)
+  (function(){
+    const lb = document.getElementById('lightbox');
+    if (!lb) return;
+    const img = lb.querySelector('.lbImg');
+    const cap = lb.querySelector('.lbCap');
+    const closeEls = lb.querySelectorAll('[data-lb-close]');
+    let lastFocus = null;
+
+    function openLB(src, caption){
+      lastFocus = document.activeElement;
+      img.src = src;
+      cap.textContent = caption || '';
+      lb.classList.add('is-open');
+      lb.setAttribute('aria-hidden','false');
+      document.body.classList.add('no-scroll');
+      // Enfocar el botón de cierre por accesibilidad
+      const btn = lb.querySelector('.lbClose');
+      if (btn) btn.focus();
+    }
+    function closeLB(){
+      lb.classList.remove('is-open');
+      lb.setAttribute('aria-hidden','true');
+      document.body.classList.remove('no-scroll');
+      img.src = '';
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
+    }
+
+    document.querySelectorAll('img.js-lightbox').forEach(el => {
+      el.style.cursor = 'zoom-in';
+      el.addEventListener('click', () => {
+        openLB(el.currentSrc || el.src, el.dataset.caption || el.alt || '');
+      });
+    });
+
+    closeEls.forEach(el => el.addEventListener('click', closeLB));
+    document.addEventListener('keydown', (e) => {
+      if (!lb.classList.contains('is-open')) return;
+      if (e.key === 'Escape') closeLB();
+    });
+  })();
+
+  // Parallax suave (solo en portada, respeta "reduced motion")
+  (function(){
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce) return;
+    const hero = document.querySelector('.heroMedia img');
+    const panel = document.getElementById('inicio');
+    if (!hero || !panel) return;
+    let ticking = false;
+
+    function onScroll(){
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(() => {
+        const rect = panel.getBoundingClientRect();
+        // Solo cuando la sección inicio está visible
+        const vh = window.innerHeight || 800;
+        const visible = rect.top < vh && rect.bottom > 0;
+        if (visible){
+          const progress = Math.min(1, Math.max(0, (vh - rect.top) / (vh + rect.height)));
+          const shift = (progress - 0.5) * 18; // px, muy sutil
+          hero.style.transform = `translateY(${shift}px) scale(1.03)`;
+        }
+        ticking = false;
+      });
+    }
+    window.addEventListener('scroll', onScroll, {passive:true});
+    onScroll();
+  })();
+</script>
+</body>
+</html>

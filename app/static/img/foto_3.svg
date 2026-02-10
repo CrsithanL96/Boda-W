@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <defs>
+    <radialGradient id="r" cx="30%" cy="20%" r="90%">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#fbf7f0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#r)"/>
+  <rect x="80" y="80" width="1040" height="640" rx="28" fill="#ffffff" stroke="#e6dfd4" stroke-width="4"/>
+  <circle cx="320" cy="300" r="90" fill="#223028" opacity="0.10"/>
+  <circle cx="420" cy="300" r="90" fill="#223028" opacity="0.06"/>
+  <circle cx="520" cy="300" r="90" fill="#223028" opacity="0.04"/>
+  <text x="600" y="430" text-anchor="middle" font-family="Inter, Arial" font-size="34" fill="#5e5a55">Sustituye por vuestra foto</text>
+  <text x="600" y="480" text-anchor="middle" font-family="Inter, Arial" font-size="22" fill="#5e5a55">static/img/foto_3.jpg</text>
+</svg>

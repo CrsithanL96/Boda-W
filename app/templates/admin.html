@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin RSVP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial; margin:0; background:#f7f7f7; color:#1c1a17}
+    .wrap{max-width:1100px; margin:0 auto; padding:18px}
+    .top{display:flex; justify-content:space-between; align-items:flex-end; gap:12px; flex-wrap:wrap}
+    h1{margin:0}
+    .cards{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:12px}
+    .card{background:#fff; border:1px solid #e6e6e6; border-radius:14px; padding:14px}
+    table{width:100%; border-collapse:collapse; font-size:13px}
+    th,td{padding:8px; border-bottom:1px solid #eee; text-align:left; vertical-align:top}
+    .muted{color:#666; font-size:12px}
+    input{padding:10px 10px; border-radius:10px; border:1px solid #ddd; width:100%}
+    button{padding:10px 12px; border-radius:10px; border:1px solid #223028; background:#223028; color:#fff; font-weight:700; cursor:pointer}
+    .row{display:grid; grid-template-columns:1.2fr 1.2fr .6fr .6fr; gap:10px; align-items:end}
+    .actions{display:flex; gap:8px; flex-wrap:wrap}
+    a{color:#223028; font-weight:600; text-decoration:none}
+    .tag{display:inline-block; padding:6px 10px; border-radius:999px; background:#eef3ef; border:1px solid #dce7dd; font-size:12px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top">
+      <div>
+        <h1>Admin RSVP</h1>
+        <div class="muted">Asistentes confirmados (sí): <strong>{{ yes_total }}</strong> · Respuestas "no": <strong>{{ no_count }}</strong></div>
+      </div>
+      <div class="actions">
+        <a class="tag" href="{{ url_for('admin.export_csv') }}">Exportar CSV</a>
+      </div>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <h2 style="margin:0 0 10px">Invitaciones (códigos)</h2>
+        <form method="post" action="{{ url_for('admin.create_invite') }}">
+          <div class="row">
+            <div>
+              <div class="muted">code (para QR)</div>
+              <input name="code" placeholder="FAMGARCIA5" required />
+            </div>
+            <div>
+              <div class="muted">label (referencia)</div>
+              <input name="label" placeholder="Familia García" />
+            </div>
+            <div>
+              <div class="muted">max</div>
+              <input name="max_guests" placeholder="5" required />
+            </div>
+            <div>
+              <button type="submit">Crear</button>
+            </div>
+          </div>
+        </form>
+
+        <div style="margin-top:12px; overflow:auto">
+          <table>
+            <thead>
+              <tr>
+                <th>Code</th>
+                <th>Label</th>
+                <th>Max</th>
+                <th>Activo</th>
+                <th>Acción</th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for i in invites %}
+              <tr>
+                <td><strong>{{ i['code'] }}</strong><div class="muted">/?code={{ i['code'] }}</div></td>
+                <td>{{ i['label'] or '' }}</td>
+                <td>{{ i['max_guests'] }}</td>
+                <td>{{ 'Sí' if i['is_active']==1 else 'No' }}</td>
+                <td>
+                  <form method="post" action="{{ url_for('admin.toggle_invite') }}">
+                    <input type="hidden" name="invite_id" value="{{ i['id'] }}" />
+                    <button type="submit">{{ 'Desactivar' if i['is_active']==1 else 'Activar' }}</button>
+                  </form>
+                </td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 style="margin:0 0 10px">Respuestas</h2>
+        <div style="overflow:auto; max-height:560px">
+          <table>
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Invite</th>
+                <th>Asiste</th>
+                <th>Asist.</th>
+                <th>Alergias</th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for r in rsvps %}
+              <tr>
+                <td><strong>{{ r['name'] }}</strong><div class="muted">{{ r['created_at'] }}</div></td>
+                <td>{{ r['invite_code'] }}</td>
+                <td>{{ 'Sí' if r['attending']==1 else 'No' }}</td>
+                <td>{{ r['guests_count'] }}</td>
+                <td>{{ r['allergies'] or '' }}<div class="muted">{{ r['note'] or '' }}</div></td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <p class="muted" style="margin-top:12px">Tip: crea códigos por familia (2, 5, etc.) y genera un QR que apunte a <strong>/?code=TU_CODIGO</strong>.</p>
+  </div>
+</body>
+</html>
