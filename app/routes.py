@@ -14,13 +14,17 @@ def open_invite():
 
 
 def _get_invite(code: str):
-    if not code:
-        return None
     db = get_db()
+
+    code = (code or "").strip()
+    if not code:
+        code = "GENERAL"   # <-- clave
+
     return db.execute(
         "SELECT code, label, max_guests, is_active FROM invites WHERE code = ?",
-        (code.strip(),),
+        (code,),
     ).fetchone()
+
 
 
 @bp.get("/")
@@ -38,7 +42,7 @@ def home():
         "index.html",
         W=WEDDING,
         invite=invite,
-        code=code,
+        code=invite["code"] if invite else code,
         done=False,
         error=None,
     )

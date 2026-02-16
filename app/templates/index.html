@@ -171,80 +171,75 @@
   </section>
 
   <section class="section panel" id="rsvp" data-panel="rsvp" style="display:none">
-    <div class="grid">
-      <div class="card reveal">
-        <h2>Confirmación</h2>
+  <div class="grid">
+    <div class="card reveal">
+      <h2>Confirmación</h2>
 
-        {% if done %}
-<div style="background:#f5f1ea;padding:25px;border-radius:12px;text-align:center;margin-bottom:20px;">
-<h2>¡Gracias, {{ invite.label }}! 🎉</h2>
-<p>Hemos recibido vuestra confirmación.</p>
-<p><strong>Nos vemos el 12 de septiembre de 2026 a las 19:30 en El Pardo.</strong></p>
-<p style="margin-top:10px;">— Cristhian & Diana 💛</p>
-</div>
+      {% if done %}
+      <div style="background:#f5f1ea;padding:25px;border-radius:12px;text-align:center;margin-bottom:20px;">
+        <h2>¡Gracias! 🎉</h2>
+        <p>Hemos recibido vuestra confirmación.</p>
+        <p><strong>Nos vemos el 12 de septiembre de 2026 a las 19:30 en El Pardo.</strong></p>
+        <p style="margin-top:10px;">— Cristhian & Diana Grisales 💛</p>
+      </div>
+      {% endif %}
 
-          <div class="ok"><strong>¡Gracias!</strong> Hemos registrado tu respuesta.</div>
-        {% endif %}
+      {% if error %}
+        <div class="err">{{ error }}</div>
+      {% endif %}
 
-        {% if error %}
-          <div class="err">{{ error }}</div>
-        {% endif %}
+      {% set invite_code = invite['code'] if invite else 'GENERAL' %}
+      {% set invite_label = (invite['label'] if invite and invite['label'] else 'Invitación general') %}
+      {% set invite_max = (invite['max_guests'] if invite and invite['max_guests'] else 5) %}
 
-        {% if not invite %}
-          <div class="err">
-            Para confirmar asistencia necesitas entrar desde el <strong>QR de tu invitación</strong>.
-            <br/>Si tienes cualquier problema, escríbenos o llámanos: <strong>{{ W.contact_phone }}</strong>
-          </div>
-        {% else %}
-          <div class="invitehint">
-            Invitación: <strong>{{ invite['label'] or invite['code'] }}</strong> · Máximo asistentes: <strong>{{ invite['max_guests'] }}</strong>
-          </div>
-
-          <form method="post" action="{{ url_for('main.rsvp') }}">
-            <input type="hidden" name="code" value="{{ invite['code'] }}" />
-
-            <div>
-              <label>Nombre y apellidos *</label>
-              <input name="name" required maxlength="120" placeholder="Ej.: Ana Martínez López" />
-            </div>
-
-            <div class="two">
-              <div>
-                <label>¿Asistirás? *</label>
-                <select name="attending" required>
-                  <option value="" selected disabled>Selecciona</option>
-                  <option value="yes">Sí</option>
-                  <option value="no">No</option>
-                </select>
-              </div>
-              <div>
-                <label>Nº de asistentes (incluyéndote) *</label>
-                <select name="guests_count" required>
-                  {% for n in range(1, invite['max_guests'] + 1) %}
-                    <option value="{{ n }}">{{ n }}</option>
-                  {% endfor %}
-                </select>
-              </div>
-            </div>
-
-            <div>
-              <label>Alergias / intolerancias (opcional)</label>
-              <textarea name="allergies" maxlength="400" placeholder="Ej.: sin gluten, frutos secos..."></textarea>
-            </div>
-
-            <div>
-              <label>Comentarios (opcional)</label>
-              <textarea name="note" maxlength="500" placeholder="Cualquier detalle que debamos saber"></textarea>
-            </div>
-
-            <button type="submit">Enviar confirmación</button>
-            <div class="fine">Tus datos se usan únicamente para la organización de la boda.</div>
-          </form>
-        {% endif %}
+      <div class="invitehint">
+        Invitación: <strong>{{ invite_label }}</strong> · Máximo asistentes: <strong>{{ invite_max }}</strong>
       </div>
 
+      <form method="post" action="{{ url_for('main.rsvp') }}">
+        <input type="hidden" name="code" value="{{ invite_code }}" />
+
+        <div>
+          <label>Nombre y apellidos *</label>
+          <input name="name" required maxlength="120" placeholder="Ej.: Ana Martínez López" />
+        </div>
+
+        <div class="two">
+          <div>
+            <label>¿Asistirás? *</label>
+            <select name="attending" required>
+              <option value="" selected disabled>Selecciona</option>
+              <option value="yes">Sí</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+          <div>
+            <label>Nº de asistentes (incluyéndote) *</label>
+            <select name="guests_count" required>
+              {% for n in range(1, invite_max + 1) %}
+                <option value="{{ n }}">{{ n }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label>Alergias / intolerancias (opcional)</label>
+          <textarea name="allergies" maxlength="400" placeholder="Ej.: sin gluten, frutos secos..."></textarea>
+        </div>
+
+        <div>
+          <label>Comentarios (opcional)</label>
+          <textarea name="note" maxlength="500" placeholder="Cualquier detalle que debamos saber"></textarea>
+        </div>
+
+        <button type="submit">Enviar confirmación</button>
+        <div class="fine">Tus datos se usan únicamente para la organización de la boda.</div>
+      </form>
     </div>
-  </section>
+  </div>
+</section>
+
 
   <section class="section panel" id="regalo" data-panel="regalo" style="display:none">
     <div class="card reveal">
